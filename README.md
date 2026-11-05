@@ -8,6 +8,9 @@
 - Quản lý thông tin sinh viên (Student Model)
 - Thêm sinh viên mới (add_student)
 - Tìm kiếm sinh viên theo tên hoặc mã (search_student)
+- Sửa thông tin sinh viên theo mã (update_student)
+- Xóa sinh viên khỏi danh sách theo mã (delete_student)
+
 
 ## Cài đặt & Chạy
 
