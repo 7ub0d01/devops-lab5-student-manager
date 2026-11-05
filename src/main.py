@@ -16,6 +16,14 @@ def add_student(students, student_id, name, age, grade):
     return True
 
 
+def search_student(students, keyword):
+    """Tìm sinh viên theo tên hoặc mã (không phân biệt hoa thường)."""
+    keyword = keyword.lower()
+    results = [s for s in students
+               if keyword in s.name.lower() or keyword in s.student_id.lower()]
+    return results
+
+
 def main():
     """Hàm chính của ứng dụng."""
     print("=" * 50)
@@ -35,12 +43,20 @@ def main():
 
     print(f"\nTotal: {len(students)} students")
 
-    # --- Tính năng mới: Thêm sinh viên ---
+    # --- Tính năng: Thêm sinh viên ---
     print("\n--- Thêm sinh viên mới ---")
     add_student(students, "SV004", "Pham Van D", 20, "K21")
     add_student(students, "SV001", "Nguyen Van A", 20, "K20")  # Trùng mã
 
     print(f"\nTotal sau khi thêm: {len(students)} students")
+
+    # --- Tính năng: Tìm kiếm sinh viên ---
+    print("\n--- Tìm kiếm sinh viên ---")
+    for keyword in ["Van", "SV002", "XYZ"]:
+        found = search_student(students, keyword)
+        print(f"  Từ khóa '{keyword}': {len(found)} kết quả")
+        for s in found:
+            print(f"    {s}")
 
 
 if __name__ == "__main__":
