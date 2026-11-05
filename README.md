@@ -1,3 +1,3 @@
 # Student Manager
 
-Ứng dụng quản lý sinh viên — DevOps Lab 5
+Ứng dụng quản lý sinh viên — DevOps Lab 5 (Nhóm A)
