@@ -52,54 +52,93 @@ def delete_student(students, student_id):
 
 
 def main():
-    """Hàm chính của ứng dụng."""
-    print("=" * 50)
-    print("STUDENT MANAGER — DevOps Lab 5")
-    print("=" * 50)
-
-    # Tạo danh sách sinh viên mẫu
+    """Hàm chính — menu nhập liệu thủ công."""
     students = [
         Student("SV001", "Nguyen Van A", 20, "K20"),
         Student("SV002", "Tran Thi B", 21, "K20"),
         Student("SV003", "Le Van C", 19, "K21"),
     ]
 
-    # Hiển thị danh sách
-    for student in students:
-        print(f"  {student}")
+    while True:
+        print("=" * 50)
+        print("STUDENT MANAGER — DevOps Lab 5")
+        print("=" * 50)
+        print("1. Hiển thị danh sách sinh viên")
+        print("2. Thêm sinh viên")
+        print("3. Tìm kiếm sinh viên")
+        print("4. Sửa sinh viên")
+        print("5. Xóa sinh viên")
+        print("0. Thoát")
+        print("=" * 50)
 
-    print(f"\nTotal: {len(students)} students")
+        choice = input("Chọn chức năng (0-5): ").strip()
 
-    # --- Tính năng: Thêm sinh viên ---
-    print("\n--- Thêm sinh viên mới ---")
-    add_student(students, "SV004", "Pham Van D", 20, "K21")
-    add_student(students, "SV001", "Nguyen Van A", 20, "K20")  # Trùng mã
+        if choice == "1":
+            print("\n--- Danh sách sinh viên ---")
+            for student in students:
+                print(f"  {student}")
+            print(f"\nTotal: {len(students)} students")
 
-    print(f"\nTotal sau khi thêm: {len(students)} students")
+        elif choice == "2":
+            print("\n--- Thêm sinh viên mới ---")
+            student_id = input("  Mã sinh viên: ").strip()
+            name = input("  Họ tên: ").strip()
+            try:
+                age = int(input("  Tuổi: ").strip())
+            except ValueError:
+                print("  [ERROR] Tuổi phải là số!")
+                input("\nNhấn Enter để tiếp tục...")
+                continue
+            grade = input("  Lớp: ").strip()
+            add_student(students, student_id, name, age, grade)
 
-    # --- Tính năng: Tìm kiếm sinh viên ---
-    print("\n--- Tìm kiếm sinh viên ---")
-    for keyword in ["Van", "SV002", "XYZ"]:
-        found = search_student(students, keyword)
-        print(f"  Từ khóa '{keyword}': {len(found)} kết quả")
-        for s in found:
-            print(f"    {s}")
+        elif choice == "3":
+            print("\n--- Tìm kiếm sinh viên ---")
+            keyword = input("  Nhập tên hoặc mã cần tìm: ").strip()
+            found = search_student(students, keyword)
+            print(f"  Tìm thấy {len(found)} kết quả:")
+            for s in found:
+                print(f"    {s}")
 
-    # --- Tính năng: Sửa sinh viên ---
-    print("\n--- Sửa sinh viên ---")
-    update_student(students, "SV002", age=22, grade="K21")
-    update_student(students, "SV999", name="Khong Ton Tai")  # Không có mã này
+        elif choice == "4":
+            print("\n--- Sửa sinh viên ---")
+            student_id = input("  Mã sinh viên cần sửa: ").strip()
+            name = input("  Họ tên mới (Enter để giữ nguyên): ").strip()
+            age_input = input("  Tuổi mới (Enter để giữ nguyên): ").strip()
+            grade = input("  Lớp mới (Enter để giữ nguyên): ").strip()
+            age = None
+            if age_input:
+                try:
+                    age = int(age_input)
+                except ValueError:
+                    print("  [ERROR] Tuổi phải là số!")
+                    input("\nNhấn Enter để tiếp tục...")
+                    continue
+            update_student(
+                students,
+                student_id,
+                name=name if name else None,
+                age=age,
+                grade=grade if grade else None,
+            )
 
-    # --- Tính năng: Xóa sinh viên ---
-    print("\n--- Xóa sinh viên ---")
-    delete_student(students, "SV003")
-    delete_student(students, "SV999")  # Không có mã này
+        elif choice == "5":
+            print("\n--- Xóa sinh viên ---")
+            student_id = input("  Mã sinh viên cần xóa: ").strip()
+            confirm = input(f"  Xác nhận xóa {student_id}? (y/N): ").strip().lower()
+            if confirm == "y":
+                delete_student(students, student_id)
+            else:
+                print("  Đã hủy xóa.")
 
-    # Danh sách cuối cùng
-    print("\n--- Danh sách cuối cùng ---")
-    for student in students:
-        print(f"  {student}")
-    print(f"\nTotal: {len(students)} students")
+        elif choice == "0":
+            print("Tạm biệt!")
+            break
+
+        else:
+            print("  [ERROR] Lựa chọn không hợp lệ, chọn 0-5!")
+
+        input("\nNhấn Enter để tiếp tục...")
 
 
 if __name__ == "__main__":
